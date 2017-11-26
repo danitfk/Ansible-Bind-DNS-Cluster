@@ -1,9 +1,9 @@
 ---
-master_ipaddress: 185.81.97.71
-slave_ipaddress: 82.99.243.44
+master_ipaddress: 192.168.1.1
+slave_ipaddress: 192.168.1.2
 bind_config_basepath: /etc/bind
 bind_config_master_zones:
-  - dpvps.com
+  - example.com
 bind_user: bind
 bind_group: bind
 bind_service_name: bind9
@@ -22,5 +22,5 @@ bind_service_enabled: yes
 bind_config_allow_query: []
 bind_config_master_allow_transfer:
   - 127.0.0.1
-  - 82.99.243.84
-  - 185.81.97.71
+  - 192.168.1.1
+  - 192.168.1.2

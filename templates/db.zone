@@ -1,13 +1,14 @@
 $TTL    4h
-$ORIGIN dpvps.com.
-@           IN      SOA     ns1.dpvps.com.    hostmaster.dpvps.com. (
+$ORIGIN {{bind_config_master_zones}}.
+@           IN      SOA     ns1.{{bind_config_master_zones}}.    hostmaster.{{bind_config_master_zones}}. (
                             201711270026    ; Serial
                             1d            ; slave refresh (1 day)
                             2h            ; slave retry time in case of a problem (2 hours)
                             2w            ; slave expiration time (2 weeks)
                             2d            ; minimum caching time in case of failed lookups (2 days)
                             )
-            IN      NS      ns1.dpvps.com.
+            IN      NS      ns1.{{bind_config_master_zones}}.
+            IN      NS      ns2.{{bind_config_master_zones}}.
 ns1         IN      A       {{ master_ipaddress }}
 ns2         IN      A       {{ slave_ipaddress }}
 www         IN      A       127.0.0.1
