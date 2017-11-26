@@ -1,0 +1,14 @@
+---
+- hosts: master,slave
+
+
+  tasks:
+    - name: "Create Zone"
+      template:
+        src: templates/db.zone
+        dest: "{{ bind_base_zones_path }}/masters/db.{{ domain }}"
+
+    - name: "Reload DNS Server"
+      systemd:
+        name: bind9
+        state: reloaded
