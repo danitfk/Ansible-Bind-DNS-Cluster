@@ -1,0 +1,22 @@
+---
+- name: "Add Webmin APT Repository in system"
+  apt_repository:
+    repo: deb https://download.webmin.com/download/repository sarge contrib
+    state: present
+
+- name: "Register jcameron's key in system"
+  apt_key:
+    url: http://www.webmin.com/jcameron-key.asc
+    state: present
+
+- name: "Install webmin"
+  apt:
+    name: webmin
+    state: latest
+    update_cache: yes
+
+- name: "Start and Enable webmin"
+  systemd:
+    name: webmin
+    enabled: yes
+    state: started

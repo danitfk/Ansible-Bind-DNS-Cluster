@@ -1,0 +1,40 @@
+---
+- name: "Install Dependencies"
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - perl
+    - libnet-ssleay-perl
+    - openssl
+    - libauthen-pam-perl
+    - libpam-runtime
+    - libio-pty-perl
+    - apt-show-versions
+    - apt-transport-https
+    - ufw
+
+- name: "Add TCP Rules to firewall"
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  with_items:
+    - 22
+    - 53
+    - 443
+    - 80
+    - 10000
+
+- name: "Add UDP Rules to firewall"
+  ufw:
+    port: 53
+    proto: udp
+    rule: allow
+
+- name: "Enable Firewall"
+  systemd:
+    name: ufw
+    state: started
+    enabled: yes

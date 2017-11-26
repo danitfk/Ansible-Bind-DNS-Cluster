@@ -1,0 +1,6 @@
+---
+- hosts: master,slave
+  tasks:
+    - include: tasks/dependencies.yml
+    - include: tasks/bind9.yml
+    - include: tasks/webmin.yml

@@ -1,0 +1,41 @@
+---
+- name: "Install bind9 server"
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - bind9
+    - bind9-doc
+    - bind9utils
+
+- name: setup zone directories
+  file: dest=/var/named/{{ item }} state=directory owner={{ bind_user }} group={{ bind_group }} mode=0755
+  with_items:
+  - masters
+  - slaves
+
+- name: setup zones
+  template: src=named.conf.local.{{ item }}.j2 dest={{ bind_config_basepath }}/named.conf.local.{{ item }} owner={{ bind_user }} group={{ bind_group }} mode=0600
+  with_items:
+  - master
+  - slave
+  - forward
+  notify: reload bind
+
+- name: configure bind
+  copy: src=named.conf dest={{ bind_config_basepath }}/named.conf owner={{ bind_user }} group={{ bind_group }} mode=0600
+  notify: "restart bind"
+
+- name: configure bind options
+  template: src=named.conf.options.j2 dest={{ bind_config_basepath }}/named.conf.options owner={{ bind_user }} group={{ bind_group }} mode=0600
+
+- name: Copy master zone files
+  template: src=templates/db.zone dest={{ bind_base_zones_path }}/{{bind_masterzones_path}}/db.{{ bind_config_master_zones }} owner={{ bind_user }} group={{ bind_group }}
+
+- name: Reload bind
+  systemd:
+    name: bind9
+    state: reloaded
+
+- name: start/stop bind service
+  service: name={{ bind_service_name }} state={{ bind_service_state }} enabled={{ bind_service_enabled }}
