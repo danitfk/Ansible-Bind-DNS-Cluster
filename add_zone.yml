@@ -6,7 +6,7 @@
     - name: "Create Zone"
       template:
         src: templates/db.zone
-        dest: "{{ bind_base_zones_path }}/masters/db.{{ domain }}"
+        dest: "{{ bind_base_zones_path }}/masters/db.{{ bind_config_master_zones }}"
 
     - name: "Reload DNS Server"
       systemd:

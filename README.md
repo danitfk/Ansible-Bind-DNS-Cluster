@@ -12,5 +12,5 @@ ansible-playbook main.yml -i hosts.yml
 ### Add Zone to server
 If you want add a zone with primary and secondary nameserver to cluster you can use this:
 ```
-ansible-playbook add_zone.yml -i hosts --extra-vars="domain=example.com"
+ansible-playbook add_zone.yml -i hosts --extra-vars="bind_config_master_zones=example.com"
 ```
