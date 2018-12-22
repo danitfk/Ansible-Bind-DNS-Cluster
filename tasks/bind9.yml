@@ -1,9 +1,8 @@
 ---
 - name: "Install bind9 server"
   apt:
-    name: "{{ item }}"
     state: latest
-  with_items:
+    pkg:
     - bind9
     - bind9-doc
     - bind9utils
