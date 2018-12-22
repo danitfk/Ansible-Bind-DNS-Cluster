@@ -1,10 +1,9 @@
 ---
 - name: "Install Dependencies"
   apt:
-    name: "{{ item }}"
     state: latest
     update_cache: yes
-  with_items:
+    pkg:
     - perl
     - libnet-ssleay-perl
     - openssl
